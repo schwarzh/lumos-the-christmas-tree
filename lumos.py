@@ -19,6 +19,7 @@ CROPPED_IMG_MARGIN = 10  # pixels
 MAX_TRACE_SPEED = 150  # pixels/second (30p/0.2sec)
 BGS_HISTORY_FRAMES = 200
 deviceID = 0
+DISABLE_BROKEN = True
 
 bgsub = cv2.createBackgroundSubtractorMOG2(BGS_HISTORY_FRAMES)
 
@@ -96,7 +97,6 @@ def _wandDetect(frameData):
 
     # Detect blobs
     keypoints = _blobDetector.detect(bgSubbedCameraFrame)
-    # Detect blobs
     
     # Show keypoints
     im_with_keypoints = cv2.drawKeypoints(cameraFrame, keypoints, np.array(
@@ -316,7 +316,7 @@ while(True):
                     spellCount = 0
                     breakIn = random.randint(5,15)
                     spellcaster.reparo()
-        else:
+        elif DISABLE_BROKEN != True:
             # randomly 'break'
             text = "Broken!"
             broken = True
