@@ -17,7 +17,10 @@ TRAINER_IMAGE_WIN_SIZE = 64
 windowName = "Wand Trace Window"
 CROPPED_IMG_MARGIN = 10  # pixels
 MAX_TRACE_SPEED = 150  # pixels/second (30p/0.2sec)
+BGS_HISTORY_FRAMES = 200
 deviceID = 0
+
+bgsub = cv2.createBackgroundSubtractorMOG2(BGS_HISTORY_FRAMES)
 
 # Globals
 camera = cv2.VideoCapture(deviceID)
@@ -87,9 +90,14 @@ def _wandDetect(frameData):
     global cameraFrame
     cameraFrame = frameData
 
-    # Detect blobs
-    keypoints = _blobDetector.detect(cameraFrame)
+    fgmask = bgsub.apply(cameraFrame)
 
+    bgSubbedCameraFrame = cv2.bitwise_and(cameraFrame,fgmask)
+
+    # Detect blobs
+    keypoints = _blobDetector.detect(bgSubbedCameraFrame)
+    # Detect blobs
+    
     # Show keypoints
     im_with_keypoints = cv2.drawKeypoints(cameraFrame, keypoints, np.array(
         []), (0, 0, 255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
