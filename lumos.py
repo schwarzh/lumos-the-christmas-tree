@@ -119,13 +119,21 @@ def getWandTrace(frameData):
             pt1 = (tracePoints[len(tracePoints) - 1])
             pt2 = (blobKeypoints[0])
             distance = _distance(pt1, pt2)
+            #print("distance =  " + str(distance))
+            #print("elapsed =  " + str(elapsed))
+            
             speed = distance / elapsed
+            #print("speed =  " + str(speed))
             if (speed >= MAX_TRACE_SPEED):
+                #print("rejected point")
                 return wandMoveTracingFrame
 
+            #print("accepted point")
             tracePoints.append(blobKeypoints[0])
             cv2.line(wandMoveTracingFrame, (int(pt1.pt[0]), int(pt1.pt[1])), (int(
                 pt2.pt[0]), int(pt2.pt[1])), 255, TRACE_THICKNESS)
+            
+            lastKeypointTime = currentKeypointTime
         else:
             lastKeypointTime = currentKeypointTime
             tracePoints.append(blobKeypoints[0])
@@ -166,11 +174,13 @@ def checkTraceValidity():
     if (len(blobKeypoints) == 0):
         currentKeypointTime = time.time()
         elapsed = currentKeypointTime - lastKeypointTime
-        if (elapsed < 4.0):
+        if (elapsed < 2.0):
             return False
-
         if (len(tracePoints) > DEQUE_BUFFER_SIZE - 5):
             sizeTrace()
+            #check for trace area here?
+            #print("valid trace")
+            #print("elapsedtrace=" + str(elapsed))
             return True
         eraseTrace()
 
