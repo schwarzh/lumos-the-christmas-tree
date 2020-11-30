@@ -170,10 +170,10 @@ def sizeTrace():
             _traceLowerCorner = (_traceLowerCorner[0], pt1[1])
 
 # Check if the trace qualifies for a possible spell
-#		Conditions for qualification-
-#		a) It isn't being currently drawn.					
-#		   i.e., 2 seconds have passed since the last detected keypoint
-#		b) It is made of at least 35 keypoints		
+#       Conditions for qualification-
+#       a) It isn't being currently drawn.                  
+#          i.e., 2 seconds have passed since the last detected keypoint
+#       b) It is made of at least 35 keypoints      
 def checkTraceValidity():
     global _traceUpperCorner, _traceLowerCorner, tracePoints
     if (len(blobKeypoints) == 0):
@@ -306,6 +306,9 @@ while(True):
                 elif spell == 1:
                     text = "Finite Incantatem"
                     spellcaster.finite_incantatem()
+                elif spell == 2:
+                    text = "Amortentia"
+                    spellcaster.amortentia()
                 elif spell == 3:
                     text = "Incendio"
                     spellcaster.incendio()

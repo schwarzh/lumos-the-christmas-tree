@@ -16,6 +16,7 @@ LUMOS = "lumos"
 AGUAMENTI = "aguamenti"
 INCENDIO = "incendio"
 BROKEN = "broken"
+AMORTENTIA = "amortentia"
 dir_path = os.path.dirname(os.path.realpath(__file__))
 mp3Dir = dir_path + "/mp3s/"
 media_prefix= "file://" + mp3Dir
@@ -24,10 +25,12 @@ incendio_command = f"{dir_path}/incendio/strip50_flames" # replace with your com
 aguamenti_command = f"{dir_path}/aguamenti/strip50_water"
 broken_command = f"{dir_path}/broken/strip50_spazzy"
 lumos_command = f"{dir_path}/lumos/strip50_light"
+amortentia_command = f"{dir_path}/amortentia/strip50_love"
 incendio_mp3 = "fire"
 arresto_momentum_mp3 = "record_scratch"
 aguamenti_mp3 = "river"
 broken_mp3 = "spazzy"
+amortentia_mp3 = "heart_beat"
 
 def killMusic():
     print("killing music")
@@ -99,6 +102,13 @@ def silencio():
     print("Silencio called")
     killMusic()
 
+def amortentia():
+    print("Amortentia called")
+    # play fire animation and sounds
+    setNewSpell(AMORTENTIA)
+    playMusic(amortentia_mp3)
+    playLights(amortentia_command)
+
 def incendio():
     print("Incendio called")
     # play fire animation and sounds
@@ -116,6 +126,8 @@ def reparo():
                 aguamenti()
         elif previous_spell == INCENDIO:
                 incendio()
+        elif previous_spell == AMORTENTIA:
+                amortentia()
     else: 
         finite_incantatem()
 
